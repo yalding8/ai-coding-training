@@ -39,13 +39,13 @@ chmod +x deploy.sh
 ./deploy.sh
 ```
 
-部署后访问: http://188.166.250.114
+部署后访问: http://YOUR_SERVER_IP
 
 ### 选项 2: 手动部署
 
 ```bash
 # 1. SSH 到服务器
-ssh root@188.166.250.114
+ssh root@YOUR_SERVER_IP
 
 # 2. 克隆代码
 cd /var/www
@@ -94,7 +94,7 @@ location /training {
 }
 ```
 
-访问地址: http://188.166.250.114/training
+访问地址: http://YOUR_SERVER_IP/training
 
 ## 🌐 绑定域名（可选）
 
@@ -103,13 +103,13 @@ location /training {
 在你的域名服务商添加 A 记录：
 
 ```
-training.yourdomain.com  →  188.166.250.114
+training.yourdomain.com  →  YOUR_SERVER_IP
 ```
 
 ### 2. 更新 Nginx 配置
 
 ```bash
-ssh root@188.166.250.114
+ssh root@YOUR_SERVER_IP
 sudo nano /etc/nginx/sites-available/ai-coding-training
 # 修改 server_name 为你的域名
 sudo systemctl reload nginx
@@ -118,7 +118,7 @@ sudo systemctl reload nginx
 ### 3. 配置 SSL（推荐）
 
 ```bash
-ssh root@188.166.250.114
+ssh root@YOUR_SERVER_IP
 sudo certbot --nginx -d training.yourdomain.com
 ```
 
@@ -133,7 +133,7 @@ git commit -m "更新内容"
 git push origin main
 
 # 服务器更新
-ssh root@188.166.250.114 "cd /var/www/ai-coding-training && git pull"
+ssh root@YOUR_SERVER_IP "cd /var/www/ai-coding-training && git pull"
 ```
 
 或直接运行部署脚本：

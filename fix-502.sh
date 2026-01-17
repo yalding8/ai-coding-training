@@ -113,7 +113,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "✅ 修复完成！"
 echo ""
 echo "🌐 请在浏览器中访问："
-echo "   http://188.166.250.114/training"
+echo "   http://YOUR_SERVER_IP/training"
 echo ""
 echo "📝 如果仍然有问题，查看错误日志："
 echo "   tail -f /var/log/nginx/error.log"

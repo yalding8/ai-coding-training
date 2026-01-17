@@ -1,13 +1,22 @@
 #!/bin/bash
 
 # AI Coding Training 部署脚本
-# 目标服务器: 188.166.250.114
 
-SERVER="root@188.166.250.114"
+# 配置服务器地址（修改为你的服务器）
+SERVER="${DEPLOY_SERVER:-root@YOUR_SERVER_IP}"
 REPO_URL="https://github.com/yalding8/ai-coding-training.git"
 DEPLOY_PATH="/var/www/ai-coding-training"
 NGINX_AVAILABLE="/etc/nginx/sites-available/ai-coding-training"
 NGINX_ENABLED="/etc/nginx/sites-enabled/ai-coding-training"
+
+# 使用方法：
+# 1. 直接修改上面的 SERVER 变量
+# 2. 或者设置环境变量：export DEPLOY_SERVER="root@your-server-ip"
+# 3. 或者作为参数传递：./deploy.sh root@your-server-ip
+
+if [ -n "$1" ]; then
+    SERVER="$1"
+fi
 
 echo "🚀 开始部署 AI Coding Training..."
 
@@ -92,10 +101,11 @@ echo ""
 echo "✅ 部署完成！"
 echo ""
 echo "🌐 访问地址："
-echo "   http://188.166.250.114"
+echo "   http://${SERVER#*@}  (根据实际端口配置访问)"
 echo ""
 echo "📝 提示："
 echo "   - 如果要绑定域名，修改 Nginx 配置中的 server_name"
 echo "   - 日志位置: /var/log/nginx/ai-coding-training.*.log"
 echo "   - 代码位置: /var/www/ai-coding-training"
+echo "   - 开放防火墙端口: 参考 FIREWALL_SETUP.md"
 echo ""

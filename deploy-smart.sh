@@ -3,8 +3,19 @@
 # AI Coding Training 智能部署脚本
 # 自动检测服务器配置并选择最佳部署方式
 
-SERVER="root@188.166.250.114"
+# 配置服务器地址（修改为你的服务器）
+SERVER="${DEPLOY_SERVER:-root@YOUR_SERVER_IP}"
 REPO_URL="https://github.com/yalding8/ai-coding-training.git"
+
+# 使用方法：
+# 1. 直接修改上面的 SERVER 变量
+# 2. 或者设置环境变量：export DEPLOY_SERVER="root@your-server-ip"
+# 3. 或者作为参数传递：./deploy-smart.sh root@your-server-ip
+
+if [ -n "$1" ]; then
+    SERVER="$1"
+    echo "📝 使用参数指定的服务器: $SERVER"
+fi
 
 echo "🚀 AI Coding Training 智能部署"
 echo "================================"
@@ -91,7 +102,7 @@ EOF
             ln -sf /etc/nginx/sites-available/ai-coding-training /etc/nginx/sites-enabled/
             nginx -t && systemctl reload nginx
 ENDSSH
-        ACCESS_URL="http://188.166.250.114:8080"
+        ACCESS_URL="http://${SERVER#*@}:8080"
         ;;
 
     2)
@@ -110,7 +121,7 @@ ENDSSH
                 echo "ℹ️  /training 配置已存在，跳过"
             fi
 ENDSSH
-        ACCESS_URL="http://188.166.250.114/training"
+        ACCESS_URL="http://${SERVER#*@}/training"
         ;;
 
     3)
@@ -145,7 +156,7 @@ EOF
             ln -sf /etc/nginx/sites-available/ai-coding-training /etc/nginx/sites-enabled/
             nginx -t && systemctl reload nginx
 ENDSSH
-        ACCESS_URL="http://188.166.250.114"
+        ACCESS_URL="http://${SERVER#*@}"
         ;;
 esac
 
