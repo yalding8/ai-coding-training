@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CODING 内部培训 | 异乡好居</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --accent-cyan: #00ffaa;
+            --accent-orange: #ff6b35;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glow-cyan: rgba(0, 255, 170, 0.3);
+            --glow-orange: rgba(255, 107, 53, 0.3);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .glow-cyan {
+            box-shadow: 0 0 20px var(--glow-cyan);
+        }
+
+        .glow-orange {
+            box-shadow: 0 0 20px var(--glow-orange);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid transparent;
+            overflow: hidden;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-orange), var(--accent-cyan));
+            background-size: 300% 300%;
+            animation: gradientShift 6s ease infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gradient-border:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .terminal {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid rgba(0, 255, 170, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+
+        .terminal-body {
+            padding: 24px;
+            font-size: 14px;
+            line-height: 1.8;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .terminal-body.expanded {
+            max-height: 2000px;
+        }
+
+        .keyword { color: #ff6b9d; }
+        .string { color: #c3e88d; }
+        .function { color: #82aaff; }
+        .comment { color: #676e95; }
+        .number { color: #f78c6c; }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        .stagger-6 { transition-delay: 0.6s; }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-orange);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(0, 255, 170, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 170, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .case-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(17, 17, 17, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .case-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .case-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 12px 48px rgba(0, 255, 170, 0.15);
+        }
+
+        .number-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-orange));
+            box-shadow: 0 4px 12px var(--glow-cyan);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border-left: 4px solid var(--accent-orange);
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-orange));
+            color: var(--bg-primary);
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 0.1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--glow-cyan);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            margin: 80px 0;
+        }
+
+        /* Project grid */
+        .project-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.6) 0%, rgba(17, 17, 17, 0.6) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 255, 170, 0.1);
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-python { background: rgba(55, 118, 171, 0.2); color: #3776ab; }
+        .tag-javascript { background: rgba(240, 219, 79, 0.2); color: #f0db4f; }
+        .tag-typescript { background: rgba(49, 120, 198, 0.2); color: #3178c6; }
+        .tag-vue { background: rgba(65, 184, 131, 0.2); color: #41b883; }
+        .tag-html { background: rgba(227, 79, 38, 0.2); color: #e34f26; }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s;
+        }
+
+        .github-link:hover {
+            color: var(--accent-orange);
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .number-circle {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .case-card {
+                padding: 24px;
+            }
+
+            h1 { font-size: 36px !important; }
+            h2 { font-size: 28px !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-orange-500"></div>
+                <span class="font-mono text-lg font-bold">AI CODING</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm font-mono">
+                <a href="#intro" class="hover:text-cyan-400 transition-colors">概念</a>
+                <a href="#why" class="hover:text-cyan-400 transition-colors">价值</a>
+                <a href="#cases" class="hover:text-cyan-400 transition-colors">案例</a>
+                <a href="#projects" class="hover:text-cyan-400 transition-colors">项目</a>
+                <a href="#pitfalls" class="hover:text-cyan-400 transition-colors">避坑</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center grid-bg pt-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="fade-in stagger-1">
+                <div class="pill bg-cyan-500/10 text-cyan-400 mb-8 inline-flex items-center gap-2">
+                    <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+                    管理干部内部培训
+                </div>
+            </div>
+
+            <h1 class="text-7xl md:text-8xl font-black mb-6 fade-in stagger-2">
+                <span class="gradient-text">AI CODING</span>
+            </h1>
+
+            <p class="text-2xl md:text-3xl text-gray-400 mb-12 fade-in stagger-3">
+                非程序员的<span class="text-white font-bold">超能力解锁指南</span>
+            </p>
+
+            <div class="flex flex-wrap gap-4 justify-center mb-12 fade-in stagger-4">
+                <div class="bg-white/5 backdrop-blur-sm px-6 py-3 rounded-full border border-white/10">
+                    <span class="text-cyan-400 font-mono">⚡ 效率提升 10x</span>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm px-6 py-3 rounded-full border border-white/10">
+                    <span class="text-orange-400 font-mono">🚀 零基础友好</span>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm px-6 py-3 rounded-full border border-white/10">
+                    <span class="text-cyan-400 font-mono">💡 18个实战项目</span>
+                </div>
+            </div>
+
+            <!-- Real Stats -->
+            <div class="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-16 fade-in stagger-5">
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                    <div class="text-4xl font-black gradient-text mb-2">18</div>
+                    <div class="text-gray-400 text-sm">GitHub 项目</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                    <div class="text-4xl font-black text-cyan-400 mb-2">10+</div>
+                    <div class="text-gray-400 text-sm">Python 脚本</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                    <div class="text-4xl font-black text-orange-400 mb-2">5+</div>
+                    <div class="text-gray-400 text-sm">Web 应用</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                    <div class="text-4xl font-black gradient-text mb-2">100%</div>
+                    <div class="text-gray-400 text-sm">AI 辅助开发</div>
+                </div>
+            </div>
+
+            <button class="btn-primary fade-in stagger-6" onclick="document.getElementById('intro').scrollIntoView({behavior: 'smooth'})">
+                开始探索
+            </button>
+        </div>
+    </section>
+
+    <!-- Section 1: What is AI CODING -->
+    <section id="intro" class="py-32 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center gap-6 mb-12 fade-in">
+                <div class="number-circle">01</div>
+                <div>
+                    <h2 class="text-5xl font-black mb-2">什么是 AI CODING？</h2>
+                    <p class="text-gray-400 font-mono text-sm">REDEFINE / PRODUCTIVITY</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="gradient-border rounded-2xl p-8 fade-in stagger-1">
+                    <div class="text-4xl mb-4">🤖</div>
+                    <h3 class="text-2xl font-bold mb-4">传统编程</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        需要学习语法、算法、数据结构...
+                        <br>门槛高，周期长，维护难
+                    </p>
+                </div>
+
+                <div class="gradient-border rounded-2xl p-8 fade-in stagger-2">
+                    <div class="text-4xl mb-4">✨</div>
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">AI CODING</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        用自然语言描述需求，AI 生成代码
+                        <br>零门槛，秒级响应，持续优化
+                    </p>
+                </div>
+            </div>
+
+            <div class="terminal fade-in stagger-3">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <span class="text-gray-400 text-sm font-mono ml-2">conversation-example.txt</span>
+                </div>
+                <div class="terminal-body font-mono text-sm" style="max-height: 2000px;">
+                    <div class="mb-4">
+                        <span class="text-cyan-400">你：</span>
+                        <span class="text-white">帮我写一个 Python 脚本，计算员工本月薪资</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-orange-400">AI：</span>
+                        <span class="text-white">好的！请问薪资计算规则是什么？</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-cyan-400">你：</span>
+                        <span class="text-white">基本工资 + 订单提成 + 绩效奖金 - 社保</span>
+                    </div>
+                    <div>
+                        <span class="text-orange-400">AI：</span>
+                        <span class="text-white">了解！代码如下 👇</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 2: Why AI CODING -->
+    <section id="why" class="py-32 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center gap-6 mb-12 fade-in">
+                <div class="number-circle">02</div>
+                <div>
+                    <h2 class="text-5xl font-black mb-2">为什么非程序员需要它？</h2>
+                    <p class="text-gray-400 font-mono text-sm">UNLOCK / YOUR POTENTIAL</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="case-card fade-in stagger-1">
+                    <div class="flex items-start gap-6">
+                        <div class="text-5xl">⚡</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3">解放重复劳动</h3>
+                            <p class="text-gray-400 leading-relaxed mb-4">
+                                每个月花 2 天手工计算薪资？用 AI 写个脚本，5 分钟搞定。
+                            </p>
+                            <div class="text-cyan-400 font-mono text-sm">
+                                节省时间：96% ↑ · 准确率：100%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-card fade-in stagger-2">
+                    <div class="flex items-start gap-6">
+                        <div class="text-5xl">🎯</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3">直接解决问题</h3>
+                            <p class="text-gray-400 leading-relaxed mb-4">
+                                不用等产研排期，不用找外包。你自己就能实现小工具、自动化脚本、数据爬虫。
+                            </p>
+                            <div class="text-orange-400 font-mono text-sm">
+                                响应速度：从周级 → 秒级
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-card fade-in stagger-3">
+                    <div class="flex items-start gap-6">
+                        <div class="text-5xl">🚀</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3">提升职业竞争力</h3>
+                            <p class="text-gray-400 leading-relaxed mb-4">
+                                在 AI 时代，会用 AI 编程的管理者 = 超级个体。你的价值不再受限于传统技能边界。
+                            </p>
+                            <div class="text-cyan-400 font-mono text-sm">
+                                能力倍增：管理 + 技术 + 创新
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-gradient-to-r from-cyan-500/10 to-orange-500/10 rounded-2xl p-8 border border-cyan-500/20 fade-in stagger-4">
+                <h3 class="text-2xl font-bold mb-4">💡 适用场景</h3>
+                <div class="grid md:grid-cols-3 gap-6 text-sm">
+                    <div>
+                        <div class="text-cyan-400 font-bold mb-2">数据处理</div>
+                        <div class="text-gray-400">Excel 自动化、数据清洗、报表生成</div>
+                    </div>
+                    <div>
+                        <div class="text-cyan-400 font-bold mb-2">流程自动化</div>
+                        <div class="text-gray-400">文件批量处理、邮件自动发送</div>
+                    </div>
+                    <div>
+                        <div class="text-cyan-400 font-bold mb-2">信息采集</div>
+                        <div class="text-gray-400">网页爬虫、API 对接、数据监控</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 3: Real Cases -->
+    <section id="cases" class="py-32 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center gap-6 mb-12 fade-in">
+                <div class="number-circle">03</div>
+                <div>
+                    <h2 class="text-5xl font-black mb-2">实战案例展示</h2>
+                    <p class="text-gray-400 font-mono text-sm">REAL / WORLD APPLICATIONS</p>
+                </div>
+            </div>
+
+            <!-- Case 1: Salary Calculator -->
+            <div class="mb-16 fade-in stagger-1">
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="inline-block bg-cyan-500/10 text-cyan-400 px-4 py-2 rounded-full text-sm font-mono">
+                            案例 01 · 薪资计算自动化
+                        </div>
+                        <a href="https://github.com/yalding8/salary-calculator" target="_blank" class="github-link">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                            </svg>
+                            View on GitHub
+                        </a>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">员工薪资自动计算系统</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        <strong class="text-white">痛点：</strong>HR 每月手工计算 50+ 员工薪资，包括基本工资、订单提成、绩效奖金、社保扣除等，耗时 2 天，易出错。
+                        <br><br>
+                        <strong class="text-white">解决方案：</strong>用 AI 生成 JavaScript 脚本，自动读取考勤、订单数据，按规则计算薪资，生成工资条。
+                    </p>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <span class="text-gray-400 text-sm font-mono ml-2">salary_calculator.js</span>
+                        <button class="ml-auto text-cyan-400 hover:text-cyan-300 text-xs" onclick="toggleCode(this)">
+                            展开代码
+                        </button>
+                    </div>
+                    <div class="terminal-body font-mono text-sm">
+<pre><span class="comment">// 薪资计算核心逻辑</span>
+<span class="keyword">function</span> <span class="function">calculateSalary</span>(employee) {
+    <span class="comment">// 基础薪资</span>
+    <span class="keyword">const</span> baseSalary = employee.baseSalary;
+
+    <span class="comment">// 订单提成：每单提成 = 订单金额 * 提成比例</span>
+    <span class="keyword">let</span> commission = <span class="number">0</span>;
+    employee.orders.<span class="function">forEach</span>(order => {
+        commission += order.amount * <span class="number">0.03</span>;
+    });
+
+    <span class="comment">// 绩效奖金</span>
+    <span class="keyword">const</span> performanceBonus = employee.performanceScore * <span class="number">100</span>;
+
+    <span class="comment">// 社保扣除</span>
+    <span class="keyword">const</span> socialInsurance = baseSalary * <span class="number">0.105</span>;
+
+    <span class="comment">// 最终薪资</span>
+    <span class="keyword">return</span> {
+        base: baseSalary,
+        commission: commission,
+        bonus: performanceBonus,
+        insurance: socialInsurance,
+        total: baseSalary + commission + performanceBonus - socialInsurance
+    };
+}</pre>
+                    </div>
+                </div>
+
+                <div class="mt-6 grid md:grid-cols-3 gap-4">
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="text-cyan-400 font-mono text-2xl font-bold">2天 → 5分钟</div>
+                        <div class="text-gray-400 text-sm mt-2">时间节省</div>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="text-orange-400 font-mono text-2xl font-bold">100%</div>
+                        <div class="text-gray-400 text-sm mt-2">准确率</div>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="text-cyan-400 font-mono text-2xl font-bold">50+</div>
+                        <div class="text-gray-400 text-sm mt-2">覆盖员工</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case 2: Market Scanner -->
+            <div class="mb-16 fade-in stagger-2">
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="inline-block bg-orange-500/10 text-orange-400 px-4 py-2 rounded-full text-sm font-mono">
+                            案例 02 · 房源信息爬虫
+                        </div>
+                        <a href="https://github.com/yalding8/market-scanner" target="_blank" class="github-link">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                            </svg>
+                            View on GitHub
+                        </a>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">竞品房源自动采集系统</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        <strong class="text-white">痛点：</strong>市场分析需要定期监控竞品房源价格、库存，人工收集效率低且数据不全。
+                        <br><br>
+                        <strong class="text-white">解决方案：</strong>AI 编写爬虫脚本，自动抓取竞品网站房源信息，存入数据库，生成对比报表。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Case 3: AI News Bot -->
+            <div class="mb-16 fade-in stagger-3">
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="inline-block bg-cyan-500/10 text-cyan-400 px-4 py-2 rounded-full text-sm font-mono">
+                            案例 03 · 新闻播报机器人
+                        </div>
+                        <a href="https://github.com/yalding8/ai-news-bot" target="_blank" class="github-link">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                            </svg>
+                            View on GitHub
+                        </a>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">AI 驱动的新闻自动化播报</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        <strong class="text-white">痛点：</strong>每天需要手工收集行业新闻、整理摘要、推送到团队群，耗时 1-2 小时。
+                        <br><br>
+                        <strong class="text-white">解决方案：</strong>Python + AI，自动抓取新闻、生成摘要、推送到企业微信，全程无人值守。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Case 4: AI Test -->
+            <div class="mb-16 fade-in stagger-4">
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="inline-block bg-orange-500/10 text-orange-400 px-4 py-2 rounded-full text-sm font-mono">
+                            案例 04 · AI 能力测试系统 ⭐ 公开
+                        </div>
+                        <a href="https://github.com/yalding8/aitest" target="_blank" class="github-link">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                            </svg>
+                            View on GitHub
+                        </a>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">完整的 AI 能力评估平台</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        <strong class="text-white">痛点：</strong>需要评估候选人的 AI 应用能力，传统面试无法量化。
+                        <br><br>
+                        <strong class="text-white">解决方案：</strong>React + Node.js，100 题库 + 授权码系统 + 自动评分 + 微信通知，已上线使用。
+                        <br><br>
+                        <strong class="text-cyan-400">🌐 在线体验：</strong><a href="https://test.pylosy.com" target="_blank" class="text-cyan-400 hover:text-orange-400 underline">test.pylosy.com</a>
+                    </p>
+                </div>
+
+                <div class="mt-6 grid md:grid-cols-4 gap-4">
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="text-cyan-400 font-mono text-2xl font-bold">100</div>
+                        <div class="text-gray-400 text-sm mt-2">题库数量</div>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="text-orange-400 font-mono text-2xl font-bold">1000+</div>
+                        <div class="text-gray-400 text-sm mt-2">授权码</div>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="text-cyan-400 font-mono text-2xl font-bold">3</div>
+                        <div class="text-gray-400 text-sm mt-2">岗位差异化</div>
+                    </div>
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+                        <div class="text-orange-400 font-mono text-2xl font-bold">⭐</div>
+                        <div class="text-gray-400 text-sm mt-2">已上线</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section: All Projects -->
+    <section id="projects" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-black mb-4">完整项目库</h2>
+                <p class="text-gray-400 font-mono text-sm">18 REAL PROJECTS / POWERED BY AI</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project Cards -->
+                <div class="project-card fade-in stagger-1">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">salary-calculator</h4>
+                        <span class="project-tag tag-javascript">JavaScript</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">薪资计算器 - 自动化员工薪资计算系统</p>
+                    <a href="https://github.com/yalding8/salary-calculator" target="_blank" class="github-link text-xs">
+                        查看源码 →
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-1">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">ai-news-bot</h4>
+                        <span class="project-tag tag-python">Python</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">AI 新闻机器人 - 自动抓取和播报新闻</p>
+                    <a href="https://github.com/yalding8/ai-news-bot" target="_blank" class="github-link text-xs">
+                        查看源码 →
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-2">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">market-scanner</h4>
+                        <span class="project-tag tag-html">HTML</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">市场扫描器 - 房源信息爬虫系统</p>
+                    <a href="https://github.com/yalding8/market-scanner" target="_blank" class="github-link text-xs">
+                        查看源码 →
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-2">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">aitest ⭐</h4>
+                        <span class="project-tag tag-python">Python</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">AI 能力测试系统 - 公开项目，已上线</p>
+                    <a href="https://github.com/yalding8/aitest" target="_blank" class="github-link text-xs">
+                        查看源码 →
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-3">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">ai-podcast</h4>
+                        <span class="project-tag tag-python">Python</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">国际教育新闻播客自动化系统</p>
+                    <a href="https://github.com/yalding8/ai-podcast" target="_blank" class="github-link text-xs">
+                        私有仓库
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-3">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">ai-staff</h4>
+                        <span class="project-tag tag-python">Python</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">AI Staff Officer - 智能参谋助手</p>
+                    <a href="https://github.com/yalding8/ai-staff" target="_blank" class="github-link text-xs">
+                        私有仓库
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-4">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">uhomespay</h4>
+                        <span class="project-tag tag-javascript">JavaScript</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">异乡好居支付系统后端</p>
+                    <a href="https://github.com/yalding8/uhomespay" target="_blank" class="github-link text-xs">
+                        私有仓库
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-4">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">uhomespay-web</h4>
+                        <span class="project-tag tag-vue">Vue</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">支付系统前端界面</p>
+                    <a href="https://github.com/yalding8/uhomespay-web" target="_blank" class="github-link text-xs">
+                        私有仓库
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-5">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">aifx</h4>
+                        <span class="project-tag tag-python">Python</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">AI FX - 外汇/汇率相关自动化</p>
+                    <a href="https://github.com/yalding8/aifx" target="_blank" class="github-link text-xs">
+                        私有仓库
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-5">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">content_generator</h4>
+                        <span class="project-tag tag-python">Python</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">内容生成器 - afterlanding</p>
+                    <a href="https://github.com/yalding8/content_generator" target="_blank" class="github-link text-xs">
+                        私有仓库
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">supercore</h4>
+                        <span class="project-tag tag-typescript">TypeScript</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">核心系统 - TypeScript 实现</p>
+                    <a href="https://github.com/yalding8/supercore" target="_blank" class="github-link text-xs">
+                        私有仓库
+                    </a>
+                </div>
+
+                <div class="project-card fade-in stagger-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <h4 class="text-lg font-bold text-white">pylosy.com</h4>
+                        <span class="project-tag tag-html">HTML</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-3">Pylosy 网站源码</p>
+                    <a href="https://github.com/yalding8/pylosy.com" target="_blank" class="github-link text-xs">
+                        私有仓库
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in stagger-6">
+                <p class="text-gray-500 text-sm font-mono">
+                    +6 个更多项目（uhomeswithu, checkdoctor, tuitionpayment, vpn, superman, yalding8.github.io）
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 4: Pitfalls -->
+    <section id="pitfalls" class="py-32 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center gap-6 mb-12 fade-in">
+                <div class="number-circle">04</div>
+                <div>
+                    <h2 class="text-5xl font-black mb-2">避坑指南</h2>
+                    <p class="text-gray-400 font-mono text-sm">COMMON / MISTAKES</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="warning-box fade-in stagger-1">
+                    <div class="flex items-start gap-4">
+                        <div class="text-3xl">⚠️</div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">盲目信任 AI 生成的代码</h4>
+                            <p class="text-gray-300 leading-relaxed mb-3">
+                                AI 不是完美的，生成的代码可能有 bug、安全漏洞或性能问题。
+                            </p>
+                            <div class="bg-black/30 rounded-lg p-4 border border-orange-500/20">
+                                <div class="text-orange-400 font-mono text-sm font-bold mb-2">✅ 正确做法</div>
+                                <ul class="text-gray-300 text-sm space-y-1 list-disc list-inside">
+                                    <li>先在测试环境运行，验证结果</li>
+                                    <li>对于关键业务逻辑，请技术同事 Code Review</li>
+                                    <li>保留原始数据备份</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box fade-in stagger-2">
+                    <div class="flex items-start gap-4">
+                        <div class="text-3xl">🔒</div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">数据安全与隐私泄露</h4>
+                            <p class="text-gray-300 leading-relaxed mb-3">
+                                不要将敏感数据（客户信息、密码、密钥）直接粘贴给 AI。
+                            </p>
+                            <div class="bg-black/30 rounded-lg p-4 border border-orange-500/20">
+                                <div class="text-orange-400 font-mono text-sm font-bold mb-2">✅ 正确做法</div>
+                                <ul class="text-gray-300 text-sm space-y-1 list-disc list-inside">
+                                    <li>用脱敏数据（假数据）示例结构</li>
+                                    <li>敏感配置用环境变量管理</li>
+                                    <li>生产环境密钥单独配置</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box fade-in stagger-3">
+                    <div class="flex items-start gap-4">
+                        <div class="text-3xl">📝</div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">需求描述不清晰</h4>
+                            <p class="text-gray-300 leading-relaxed mb-3">
+                                模糊的需求会得到模糊的代码。"帮我写个爬虫" 远不如 "爬取 XX 网站的房源标题、价格、图片，存为 CSV"。
+                            </p>
+                            <div class="bg-black/30 rounded-lg p-4 border border-orange-500/20">
+                                <div class="text-orange-400 font-mono text-sm font-bold mb-2">✅ 正确做法</div>
+                                <ul class="text-gray-300 text-sm space-y-1 list-disc list-inside">
+                                    <li>明确输入数据格式</li>
+                                    <li>详细说明业务规则</li>
+                                    <li>提供预期输出示例</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box fade-in stagger-4">
+                    <div class="flex items-start gap-4">
+                        <div class="text-3xl">🔧</div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">忽视代码可维护性</h4>
+                            <p class="text-gray-300 leading-relaxed mb-3">
+                                一次性脚本可以粗糙，但长期使用的工具需要考虑可维护性。
+                            </p>
+                            <div class="bg-black/30 rounded-lg p-4 border border-orange-500/20">
+                                <div class="text-orange-400 font-mono text-sm font-bold mb-2">✅ 正确做法</div>
+                                <ul class="text-gray-300 text-sm space-y-1 list-disc list-inside">
+                                    <li>要求 AI 添加代码注释</li>
+                                    <li>用配置文件管理参数（不硬编码）</li>
+                                    <li>记录使用文档和操作步骤</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box fade-in stagger-4">
+                    <div class="flex items-start gap-4">
+                        <div class="text-3xl">⏰</div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">过度依赖 AI，停止学习</h4>
+                            <p class="text-gray-300 leading-relaxed mb-3">
+                                AI 是工具，不是替代品。理解代码逻辑比复制粘贴更重要。
+                            </p>
+                            <div class="bg-black/30 rounded-lg p-4 border border-orange-500/20">
+                                <div class="text-orange-400 font-mono text-sm font-bold mb-2">✅ 正确做法</div>
+                                <ul class="text-gray-300 text-sm space-y-1 list-disc list-inside">
+                                    <li>让 AI 解释代码每一步在做什么</li>
+                                    <li>尝试修改参数，理解原理</li>
+                                    <li>逐步建立编程思维</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center fade-in stagger-4">
+                <div class="inline-block bg-cyan-500/10 border border-cyan-500/20 rounded-2xl px-8 py-6">
+                    <div class="text-4xl mb-3">💡</div>
+                    <h3 class="text-2xl font-bold mb-2">记住这句话</h3>
+                    <p class="text-gray-400 text-lg">
+                        <span class="text-cyan-400 font-bold">AI CODING 不是魔法</span>，而是<span class="text-orange-400 font-bold">放大器</span>
+                        <br>
+                        它放大你的生产力，也放大你的思维方式
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="py-32 px-6 grid-bg">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="fade-in stagger-1">
+                <h2 class="text-5xl md:text-6xl font-black mb-6">
+                    准备好解锁<br><span class="gradient-text">超能力</span>了吗？
+                </h2>
+                <p class="text-xl text-gray-400 mb-12">
+                    从今天开始，让 AI 成为你的编程助手
+                </p>
+
+                <div class="flex flex-wrap gap-6 justify-center mb-12">
+                    <button class="btn-primary" onclick="window.open('https://test.pylosy.com', '_blank')">
+                        体验 AI 测试系统
+                    </button>
+                    <button class="bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold border border-white/10 transition-all" onclick="window.open('https://github.com/yalding8', '_blank')">
+                        查看 GitHub
+                    </button>
+                </div>
+
+                <div class="mt-16 text-gray-500 font-mono text-sm">
+                    <div class="mb-2">异乡好居 · 管理干部培训</div>
+                    <div>Powered by AI · 18 Real Projects · @yalding8</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Scroll animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Toggle code visibility
+        function toggleCode(button) {
+            const terminalBody = button.closest('.terminal').querySelector('.terminal-body');
+            const isExpanded = terminalBody.classList.contains('expanded');
+
+            if (isExpanded) {
+                terminalBody.classList.remove('expanded');
+                button.textContent = '展开代码';
+            } else {
+                terminalBody.classList.add('expanded');
+                button.textContent = '收起代码';
+            }
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add active state to nav based on scroll position
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 200;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                const navLink = document.querySelector(`nav a[href="#${sectionId}"]`);
+
+                if (navLink && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('text-cyan-400');
+                    });
+                    navLink.classList.add('text-cyan-400');
+                }
+            });
+        });
+
+        // Add parallax effect to hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const hero = document.querySelector('section');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                hero.style.opacity = 1 - (scrolled / 800);
+            }
+        });
+    </script>
+</body>
+</html>
