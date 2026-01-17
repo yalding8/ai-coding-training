@@ -45,8 +45,9 @@ if [ "$PORT_80_STATUS" -gt 0 ]; then
     echo "  1) 使用端口 8080（推荐）"
     echo "  2) 使用子路径 /training"
     echo "  3) 覆盖端口 80（不推荐，会影响现有服务）"
+    echo "  4) 使用域名 training.pylosy.com (虚拟主机)"
     echo ""
-    read -p "请选择 [1-3]: " DEPLOY_OPTION
+    read -p "请选择 [1-4]: " DEPLOY_OPTION
 else
     echo "✅ 端口 80 可用"
     DEPLOY_OPTION="1"
@@ -64,7 +65,9 @@ ssh $SERVER << 'ENDSSH'
     else
         echo "🔄 更新代码..."
         cd /var/www/ai-coding-training
-        git pull origin main
+        # 强制重置以避免本地修改导致的冲突
+        git fetch origin
+        git reset --hard origin/main
     fi
 ENDSSH
 
@@ -122,6 +125,41 @@ ENDSSH
             fi
 ENDSSH
         ACCESS_URL="http://${SERVER#*@}/training"
+        ;;
+    
+    4)
+        read -p "请输入 Nginx 监听端口 [默认 80]: " NGINX_PORT
+        NGINX_PORT=${NGINX_PORT:-80}
+        echo "🔧 配置 Nginx（域名 training.pylosy.com，端口 $NGINX_PORT）..."
+        
+        ssh $SERVER << ENDSSH
+            cat > /etc/nginx/sites-available/ai-coding-training << EOF
+server {
+    listen $NGINX_PORT;
+    server_name training.pylosy.com;
+
+    root /var/www/ai-coding-training;
+    index index.html;
+
+    access_log /var/log/nginx/ai-coding-training.access.log;
+    error_log /var/log/nginx/ai-coding-training.error.log;
+
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+
+    gzip on;
+    gzip_types text/plain text/css text/javascript application/javascript;
+}
+EOF
+            ln -sf /etc/nginx/sites-available/ai-coding-training /etc/nginx/sites-enabled/
+            nginx -t && systemctl reload nginx
+ENDSSH
+        if [ "$NGINX_PORT" = "80" ]; then
+            ACCESS_URL="http://training.pylosy.com"
+        else
+            ACCESS_URL="http://training.pylosy.com:$NGINX_PORT"
+        fi
         ;;
 
     3)
