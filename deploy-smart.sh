@@ -130,10 +130,41 @@ ENDSSH
     4)
         read -p "请输入 Nginx 监听端口 [默认 80]: " NGINX_PORT
         NGINX_PORT=${NGINX_PORT:-80}
-        echo "🔧 配置 Nginx（域名 training.pylosy.com，端口 $NGINX_PORT）..."
+        echo "🔧 配置 Nginx（域名 training.pylosy.com，端口 $NGINX_PORT + SSL）..."
         
         ssh $SERVER << ENDSSH
-            cat > /etc/nginx/sites-available/ai-coding-training << EOF
+            # 检查 SSL 证书是否存在
+            if [ -d "/etc/letsencrypt/live/training.pylosy.com" ]; then
+                echo "✅ 检测到 SSL 证书，配置 HTTPS..."
+                cat > /etc/nginx/sites-available/ai-coding-training << EOF
+server {
+    listen $NGINX_PORT;
+    listen 443 ssl;
+    server_name training.pylosy.com;
+
+    root /var/www/ai-coding-training;
+    index index.html;
+
+    # SSL Configuration
+    ssl_certificate /etc/letsencrypt/live/training.pylosy.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/training.pylosy.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    access_log /var/log/nginx/ai-coding-training.access.log;
+    error_log /var/log/nginx/ai-coding-training.error.log;
+
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+
+    gzip on;
+    gzip_types text/plain text/css text/javascript application/javascript;
+}
+EOF
+            else
+                echo "⚠️  未检测到 SSL 证书，仅配置 HTTP..."
+                cat > /etc/nginx/sites-available/ai-coding-training << EOF
 server {
     listen $NGINX_PORT;
     server_name training.pylosy.com;
@@ -152,11 +183,12 @@ server {
     gzip_types text/plain text/css text/javascript application/javascript;
 }
 EOF
+            fi
             ln -sf /etc/nginx/sites-available/ai-coding-training /etc/nginx/sites-enabled/
             nginx -t && systemctl reload nginx
 ENDSSH
         if [ "$NGINX_PORT" = "80" ]; then
-            ACCESS_URL="http://training.pylosy.com"
+            ACCESS_URL="https://training.pylosy.com"
         else
             ACCESS_URL="http://training.pylosy.com:$NGINX_PORT"
         fi
