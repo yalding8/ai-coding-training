@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据看板生成器 - 现场 Demo 教程</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto+Sans SC', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00ffaa 0%, #ff6b35 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid rgba(0, 255, 170, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(17, 17, 17, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ffaa, #ff6b35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .copy-btn {
+            background: rgba(0, 255, 170, 0.1);
+            border: 1px solid #00ffaa;
+            color: #00ffaa;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(0, 255, 170, 0.2);
+        }
+    </style>
+</head>
+
+<body class="p-8">
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-black mb-4">
+                <span class="gradient-text">数据看板生成器</span>
+            </h1>
+            <p class="text-2xl text-gray-400">30分钟实战教程 · 从零到成品</p>
+            <div class="mt-6 flex justify-center gap-4">
+                <span class="bg-purple-500/20 text-purple-400 px-4 py-2 rounded-full text-sm">Python + AI</span>
+                <span class="bg-cyan-500/20 text-cyan-400 px-4 py-2 rounded-full text-sm">零基础友好</span>
+                <span class="bg-orange-500/20 text-orange-400 px-4 py-2 rounded-full text-sm">立即可用</span>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <div class="step-card border-l-4 border-purple-500">
+            <h2 class="text-2xl font-bold mb-4">🎯 你将完成什么？</h2>
+            <p class="text-gray-300 mb-4">
+                创建一个 Python 脚本，读取业务数据（Excel/CSV），自动生成包含多种图表的交互式 HTML 看板。
+            </p>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-white/5 p-3 rounded">
+                    <div class="text-cyan-400 font-bold mb-1">📊 销售趋势图</div>
+                    <div class="text-gray-400">时间序列折线图</div>
+                </div>
+                <div class="bg-white/5 p-3 rounded">
+                    <div class="text-cyan-400 font-bold mb-1">🗺️ 地区分布图</div>
+                    <div class="text-gray-400">柱状图对比</div>
+                </div>
+                <div class="bg-white/5 p-3 rounded">
+                    <div class="text-cyan-400 font-bold mb-1">🏆 Top 10 排行</div>
+                    <div class="text-gray-400">横向条形图</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prerequisites -->
+        <div class="step-card">
+            <h2 class="text-2xl font-bold mb-4">📋 准备工作（5分钟）</h2>
+
+            <h3 class="text-lg font-bold text-cyan-400 mb-2">1. 安装 Python（如果还没有）</h3>
+            <p class="text-gray-400 mb-2">下载并安装 Python 3.8+：<a href="https://www.python.org/downloads/"
+                    class="text-cyan-400 underline" target="_blank">python.org</a></p>
+
+            <h3 class="text-lg font-bold text-cyan-400 mb-2 mt-4">2. 安装必要的库</h3>
+            <div class="code-block font-mono text-sm mb-2">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-gray-400"># 在终端/命令行中运行：</span>
+                    <button class="copy-btn" onclick="copyCode('install-cmd')">复制</button>
+                </div>
+                <code id="install-cmd" class="text-green-400">pip install pandas plotly</code>
+            </div>
+
+            <h3 class="text-lg font-bold text-cyan-400 mb-2 mt-4">3. 准备示例数据</h3>
+            <p class="text-gray-400 mb-2">创建一个名为 <code class="bg-white/10 px-2 py-1 rounded">sales_data.csv</code>
+                的文件，内容如下：</p>
+            <div class="code-block font-mono text-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-gray-400"># sales_data.csv</span>
+                    <button class="copy-btn" onclick="copyCode('sample-data')">复制</button>
+                </div>
+                <pre id="sample-data" class="text-gray-300">日期,地区,销售额,订单数
+2026-01-01,北京,15000,45
+2026-01-02,上海,18000,52
+2026-01-03,广州,12000,38
+2026-01-04,深圳,20000,60
+2026-01-05,北京,16000,48
+2026-01-06,上海,19000,55
+2026-01-07,广州,13000,40
+2026-01-08,深圳,21000,62
+2026-01-09,北京,17000,50
+2026-01-10,上海,20000,58</pre>
+            </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="step-card border-l-4 border-cyan-500">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="step-number">1</div>
+                <h2 class="text-2xl font-bold">创建 Python 脚本</h2>
+            </div>
+            <p class="text-gray-300 mb-4">创建一个名为 <code
+                    class="bg-white/10 px-2 py-1 rounded">dashboard_generator.py</code> 的文件</p>
+
+            <h3 class="text-lg font-bold text-orange-400 mb-2">💡 使用 AI 辅助（推荐）</h3>
+            <p class="text-gray-400 mb-2">打开 Cursor/Claude，输入以下 Prompt：</p>
+            <div class="code-block font-mono text-sm mb-4">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-gray-400"># AI Prompt</span>
+                    <button class="copy-btn" onclick="copyCode('ai-prompt')">复制</button>
+                </div>
+                <pre id="ai-prompt" class="text-gray-300">帮我写一个 Python 脚本，要求：
+1. 读取 sales_data.csv 文件
+2. 使用 Plotly 生成以下图表：
+   - 销售额趋势图（按日期）
+   - 各地区销售额对比柱状图
+   - Top 5 地区排行（横向条形图）
+3. 将所有图表整合到一个 HTML 文件中
+4. 代码要有注释，易于理解</pre>
+            </div>
+
+            <h3 class="text-lg font-bold text-orange-400 mb-2">📝 完整代码（AI 生成后的参考）</h3>
+            <div class="code-block font-mono text-sm" style="max-height: 500px; overflow-y: auto;">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-gray-400"># dashboard_generator.py</span>
+                    <button class="copy-btn" onclick="copyCode('full-code')">复制</button>
+                </div>
+                <pre id="full-code" class="text-gray-300">import pandas as pd
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+# 1. 读取数据
+print("📊 读取数据...")
+df = pd.read_csv('sales_data.csv')
+df['日期'] = pd.to_datetime(df['日期'])
+
+# 2. 数据分析
+print("🔍 分析数据...")
+# 按地区汇总
+region_summary = df.groupby('地区').agg({
+    '销售额': 'sum',
+    '订单数': 'sum'
+}).reset_index()
+region_summary = region_summary.sort_values('销售额', ascending=False)
+
+# 3. 创建图表
+print("📈 生成图表...")
+
+# 创建子图布局（2行2列）
+fig = make_subplots(
+    rows=2, cols=2,
+    subplot_titles=('销售额趋势', '地区销售对比', 'Top 5 地区排行', '订单数分布'),
+    specs=[[{"type": "scatter"}, {"type": "bar"}],
+           [{"type": "bar"}, {"type": "pie"}]]
+)
+
+# 图表1：销售额趋势
+fig.add_trace(
+    go.Scatter(
+        x=df['日期'],
+        y=df['销售额'],
+        mode='lines+markers',
+        name='销售额',
+        line=dict(color='#00ffaa', width=3),
+        marker=dict(size=8)
+    ),
+    row=1, col=1
+)
+
+# 图表2：地区销售对比
+fig.add_trace(
+    go.Bar(
+        x=region_summary['地区'],
+        y=region_summary['销售额'],
+        name='地区销售额',
+        marker=dict(color='#ff6b35')
+    ),
+    row=1, col=2
+)
+
+# 图表3：Top 5 排行
+top5 = region_summary.head(5)
+fig.add_trace(
+    go.Bar(
+        x=top5['销售额'],
+        y=top5['地区'],
+        orientation='h',
+        name='Top 5',
+        marker=dict(color='#00ffaa')
+    ),
+    row=2, col=1
+)
+
+# 图表4：订单数分布（饼图）
+fig.add_trace(
+    go.Pie(
+        labels=region_summary['地区'],
+        values=region_summary['订单数'],
+        name='订单分布'
+    ),
+    row=2, col=2
+)
+
+# 4. 更新布局
+fig.update_layout(
+    title_text="业务数据看板",
+    title_font_size=24,
+    showlegend=True,
+    height=800,
+    template='plotly_dark'
+)
+
+# 5. 保存为 HTML
+output_file = 'dashboard.html'
+fig.write_html(output_file)
+print(f"✅ 看板已生成：{output_file}")
+print(f"🌐 请在浏览器中打开 {output_file} 查看结果")</pre>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card border-l-4 border-orange-500">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="step-number">2</div>
+                <h2 class="text-2xl font-bold">运行脚本</h2>
+            </div>
+            <p class="text-gray-300 mb-4">在终端/命令行中运行：</p>
+            <div class="code-block font-mono text-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-gray-400"># 运行命令</span>
+                    <button class="copy-btn" onclick="copyCode('run-cmd')">复制</button>
+                </div>
+                <code id="run-cmd" class="text-green-400">python dashboard_generator.py</code>
+            </div>
+            <p class="text-gray-400 mt-4">✅ 成功后会生成 <code class="bg-white/10 px-2 py-1 rounded">dashboard.html</code> 文件
+            </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card border-l-4 border-purple-500">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="step-number">3</div>
+                <h2 class="text-2xl font-bold">查看成果</h2>
+            </div>
+            <p class="text-gray-300 mb-4">双击打开 <code class="bg-white/10 px-2 py-1 rounded">dashboard.html</code>，你将看到：
+            </p>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white/5 p-4 rounded">
+                    <div class="text-cyan-400 font-bold mb-2">✨ 交互式图表</div>
+                    <div class="text-gray-400 text-sm">鼠标悬停查看详细数据</div>
+                </div>
+                <div class="bg-white/5 p-4 rounded">
+                    <div class="text-cyan-400 font-bold mb-2">📱 响应式设计</div>
+                    <div class="text-gray-400 text-sm">自动适配屏幕大小</div>
+                </div>
+                <div class="bg-white/5 p-4 rounded">
+                    <div class="text-cyan-400 font-bold mb-2">🎨 专业美观</div>
+                    <div class="text-gray-400 text-sm">深色主题，现代设计</div>
+                </div>
+                <div class="bg-white/5 p-4 rounded">
+                    <div class="text-cyan-400 font-bold mb-2">🔗 易分享</div>
+                    <div class="text-gray-400 text-sm">单个 HTML 文件，发送即用</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced -->
+        <div class="step-card bg-gradient-to-br from-purple-900/20 to-pink-900/20">
+            <h2 class="text-2xl font-bold mb-4">🚀 进阶优化（可选）</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-bold text-purple-400 mb-2">1. 使用真实数据</h3>
+                    <p class="text-gray-400 text-sm">将你的 Excel/CSV 文件路径替换到代码中的 <code
+                            class="bg-white/10 px-1 rounded">pd.read_csv()</code></p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-purple-400 mb-2">2. 添加更多图表</h3>
+                    <p class="text-gray-400 text-sm">让 AI 帮你添加散点图、热力图、箱线图等</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-purple-400 mb-2">3. 自动化定时生成</h3>
+                    <p class="text-gray-400 text-sm">使用 cron（Linux/Mac）或任务计划程序（Windows）定时运行脚本</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-purple-400 mb-2">4. 添加数据洞察</h3>
+                    <p class="text-gray-400 text-sm">让 AI 分析数据趋势，自动生成文字摘要</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="step-card">
+            <h2 class="text-2xl font-bold mb-4">🔧 常见问题</h2>
+            <div class="space-y-3">
+                <div class="bg-white/5 p-3 rounded">
+                    <div class="text-orange-400 font-bold mb-1">Q: ModuleNotFoundError: No module named 'pandas'</div>
+                    <div class="text-gray-400 text-sm">A: 运行 <code
+                            class="bg-white/10 px-1 rounded">pip install pandas plotly</code></div>
+                </div>
+                <div class="bg-white/5 p-3 rounded">
+                    <div class="text-orange-400 font-bold mb-1">Q: FileNotFoundError: sales_data.csv</div>
+                    <div class="text-gray-400 text-sm">A: 确保 CSV 文件与 Python 脚本在同一目录</div>
+                </div>
+                <div class="bg-white/5 p-3 rounded">
+                    <div class="text-orange-400 font-bold mb-1">Q: 图表显示乱码</div>
+                    <div class="text-gray-400 text-sm">A: CSV 文件保存为 UTF-8 编码</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-12 text-gray-400">
+            <p class="mb-2">🎉 恭喜完成！你已掌握 AI Coding 的核心技能</p>
+            <p class="text-sm">返回 <a href="index.html" class="text-cyan-400 underline">培训主页</a></p>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(id) {
+            const code = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ 已复制到剪贴板！');
+            });
+        }
+    </script>
+</body>
+
+</html>
