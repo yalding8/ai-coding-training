@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -87,8 +90,15 @@
         }
 
         @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .terminal {
@@ -115,9 +125,17 @@
             opacity: 0.8;
         }
 
-        .terminal-dot.red { background: #ff5f56; }
-        .terminal-dot.yellow { background: #ffbd2e; }
-        .terminal-dot.green { background: #27c93f; }
+        .terminal-dot.red {
+            background: #ff5f56;
+        }
+
+        .terminal-dot.yellow {
+            background: #ffbd2e;
+        }
+
+        .terminal-dot.green {
+            background: #27c93f;
+        }
 
         .terminal-body {
             padding: 24px;
@@ -132,17 +150,31 @@
             max-height: 2000px;
         }
 
-        .keyword { color: #ff6b9d; }
-        .string { color: #c3e88d; }
-        .function { color: #82aaff; }
-        .comment { color: #676e95; }
-        .number { color: #f78c6c; }
+        .keyword {
+            color: #ff6b9d;
+        }
+
+        .string {
+            color: #c3e88d;
+        }
+
+        .function {
+            color: #82aaff;
+        }
+
+        .comment {
+            color: #676e95;
+        }
+
+        .number {
+            color: #f78c6c;
+        }
 
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .fade-in.visible {
@@ -150,12 +182,29 @@
             transform: translateY(0);
         }
 
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        .stagger-4 { transition-delay: 0.4s; }
-        .stagger-5 { transition-delay: 0.5s; }
-        .stagger-6 { transition-delay: 0.6s; }
+        .stagger-1 {
+            transition-delay: 0.1s;
+        }
+
+        .stagger-2 {
+            transition-delay: 0.2s;
+        }
+
+        .stagger-3 {
+            transition-delay: 0.3s;
+        }
+
+        .stagger-4 {
+            transition-delay: 0.4s;
+        }
+
+        .stagger-5 {
+            transition-delay: 0.5s;
+        }
+
+        .stagger-6 {
+            transition-delay: 0.6s;
+        }
 
         ::-webkit-scrollbar {
             width: 8px;
@@ -182,8 +231,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .float-animation {
@@ -327,11 +383,30 @@
             letter-spacing: 0.5px;
         }
 
-        .tag-python { background: rgba(55, 118, 171, 0.2); color: #3776ab; }
-        .tag-javascript { background: rgba(240, 219, 79, 0.2); color: #f0db4f; }
-        .tag-typescript { background: rgba(49, 120, 198, 0.2); color: #3178c6; }
-        .tag-vue { background: rgba(65, 184, 131, 0.2); color: #41b883; }
-        .tag-html { background: rgba(227, 79, 38, 0.2); color: #e34f26; }
+        .tag-python {
+            background: rgba(55, 118, 171, 0.2);
+            color: #3776ab;
+        }
+
+        .tag-javascript {
+            background: rgba(240, 219, 79, 0.2);
+            color: #f0db4f;
+        }
+
+        .tag-typescript {
+            background: rgba(49, 120, 198, 0.2);
+            color: #3178c6;
+        }
+
+        .tag-vue {
+            background: rgba(65, 184, 131, 0.2);
+            color: #41b883;
+        }
+
+        .tag-html {
+            background: rgba(227, 79, 38, 0.2);
+            color: #e34f26;
+        }
 
         .github-link {
             display: inline-flex;
@@ -360,11 +435,17 @@
                 padding: 24px;
             }
 
-            h1 { font-size: 36px !important; }
-            h2 { font-size: 28px !important; }
+            h1 {
+                font-size: 36px !important;
+            }
+
+            h2 {
+                font-size: 28px !important;
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav>
@@ -376,6 +457,7 @@
             <div class="hidden md:flex items-center gap-8 text-sm font-mono">
                 <a href="#intro" class="hover:text-cyan-400 transition-colors">概念</a>
                 <a href="#why" class="hover:text-cyan-400 transition-colors">价值</a>
+                <a href="#prompt-tips" class="hover:text-cyan-400 transition-colors">技巧</a>
                 <a href="#cases" class="hover:text-cyan-400 transition-colors">案例</a>
                 <a href="#projects" class="hover:text-cyan-400 transition-colors">项目</a>
                 <a href="#pitfalls" class="hover:text-cyan-400 transition-colors">避坑</a>
@@ -433,7 +515,8 @@
                 </div>
             </div>
 
-            <button class="btn-primary fade-in stagger-6" onclick="document.getElementById('intro').scrollIntoView({behavior: 'smooth'})">
+            <button class="btn-primary fade-in stagger-6"
+                onclick="document.getElementById('intro').scrollIntoView({behavior: 'smooth'})">
                 开始探索
             </button>
         </div>
@@ -559,7 +642,8 @@
                 </div>
             </div>
 
-            <div class="mt-16 bg-gradient-to-r from-cyan-500/10 to-orange-500/10 rounded-2xl p-8 border border-cyan-500/20 fade-in stagger-4">
+            <div
+                class="mt-16 bg-gradient-to-r from-cyan-500/10 to-orange-500/10 rounded-2xl p-8 border border-cyan-500/20 fade-in stagger-4">
                 <h3 class="text-2xl font-bold mb-4">💡 适用场景</h3>
                 <div class="grid md:grid-cols-3 gap-6 text-sm">
                     <div>
@@ -579,13 +663,17 @@
 
             <!-- Special Recommendation: AnyGen -->
             <div class="mt-8 relative group fade-in stagger-5">
-                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
-                <div class="relative bg-gray-900 ring-1 ring-white/10 rounded-2xl p-8 md:flex items-center justify-between overflow-hidden">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-60 transition duration-1000 group-hover:duration-200">
+                </div>
+                <div
+                    class="relative bg-gray-900 ring-1 ring-white/10 rounded-2xl p-8 md:flex items-center justify-between overflow-hidden">
                     <div class="relative z-10 mb-6 md:mb-0 md:mr-8">
                         <div class="flex items-center gap-3 mb-2">
-                             <span class="text-2xl">⚡</span>
-                             <h3 class="text-xl font-bold text-white">特别推荐：AnyGen AI 工作台</h3>
-                             <span class="bg-gradient-to-r from-purple-500 to-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Productivity</span>
+                            <span class="text-2xl">⚡</span>
+                            <h3 class="text-xl font-bold text-white">特别推荐：AnyGen AI 工作台</h3>
+                            <span
+                                class="bg-gradient-to-r from-purple-500 to-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Productivity</span>
                         </div>
                         <p class="text-gray-300 text-sm leading-relaxed mb-2">
                             "I'm using AnyGen to supercharge my productivity with AI - it's an amazing workspace."
@@ -594,13 +682,215 @@
                             集成了最强模型的一站式 AI 工作流平台，让你的效率再提升 10 倍。
                         </p>
                     </div>
-                    <a href="https://www.anygen.io/home?invitation_code=NCNQEFRPNSPKYE6" target="_blank" class="relative z-10 flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all transform hover:-translate-y-1 whitespace-nowrap group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                    <a href="https://www.anygen.io/home?invitation_code=NCNQEFRPNSPKYE6" target="_blank"
+                        class="relative z-10 flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all transform hover:-translate-y-1 whitespace-nowrap group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                         <span>立即试用</span>
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
                     </a>
-                    
+
                     <!-- Decorative background element -->
-                    <div class="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-blue-900/20 to-transparent pointer-events-none"></div>
+                    <div
+                        class="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-l from-blue-900/20 to-transparent pointer-events-none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 2.5: Prompt Engineering Tips -->
+    <section id="prompt-tips" class="py-32 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center gap-6 mb-12 fade-in">
+                <div class="number-circle">02.5</div>
+                <div>
+                    <h2 class="text-5xl font-black mb-2">VibeCoding 新手小技巧</h2>
+                    <p class="text-gray-400 font-mono text-sm">MASTER / PROMPT ENGINEERING</p>
+                </div>
+            </div>
+
+            <div class="mb-12 fade-in stagger-1">
+                <p class="text-2xl text-gray-300 mb-4">快速使用 AI，<span class="gradient-text font-bold">Prompt 是关键！</span>
+                </p>
+                <p class="text-gray-400">掌握这些技巧，让 AI 成为你的超级助手</p>
+            </div>
+
+            <!-- Level 1: Basic -->
+            <div class="mb-8 fade-in stagger-2">
+                <div class="case-card border-l-4 border-cyan-400">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                            <span class="text-2xl">🔵</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-cyan-400">Level 1：表层提示</h3>
+                        <span class="pill bg-cyan-500/10 text-cyan-400 text-xs">入门</span>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white/5 rounded-xl p-4">
+                            <h4 class="text-white font-bold mb-2 flex items-center gap-2">
+                                <span class="text-cyan-400">●</span> 零样本
+                            </h4>
+                            <p class="text-gray-400 text-sm">不提供示例，直接提问，靠运气</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4">
+                            <h4 class="text-white font-bold mb-2 flex items-center gap-2">
+                                <span class="text-cyan-400">●</span> 单样本
+                            </h4>
+                            <p class="text-gray-400 text-sm">给一个例子，效果稍好</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4">
+                            <h4 class="text-white font-bold mb-2 flex items-center gap-2">
+                                <span class="text-cyan-400">●</span> 少样本
+                            </h4>
+                            <p class="text-gray-400 text-sm">给多个例子，引导回答</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4">
+                            <h4 class="text-white font-bold mb-2 flex items-center gap-2">
+                                <span class="text-cyan-400">●</span> 简单任务
+                            </h4>
+                            <p class="text-gray-400 text-sm">总结、改写、头脑风暴、用 5 岁能懂的方式解释</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 2: Practical -->
+            <div class="mb-8 fade-in stagger-3">
+                <div class="case-card border-l-4 border-orange-400">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center">
+                            <span class="text-2xl">🟠</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-orange-400">Level 2：实战区</h3>
+                        <span class="pill bg-orange-500/10 text-orange-400 text-xs">进阶</span>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">设定角色</div>
+                            <div class="text-gray-400 text-xs">告诉 AI 要扮演谁、怎么说话</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">语气与风格</div>
+                            <div class="text-gray-400 text-xs">明确清晰度、正式度、声音</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">流程指令</div>
+                            <div class="text-gray-400 text-xs">Plan → Act → Summarize</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">明确任务</div>
+                            <div class="text-gray-400 text-xs">说清楚你要什么</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">加入约束</div>
+                            <div class="text-gray-400 text-xs">范围、限制、边界</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">提供背景</div>
+                            <div class="text-gray-400 text-xs">受众、上下文、限制条件</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">临时对话</div>
+                            <div class="text-gray-400 text-xs">不使用历史记忆</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">输出格式</div>
+                            <div class="text-gray-400 text-xs">列表、表格、结构化</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">工具策略</div>
+                            <div class="text-gray-400 text-xs">是否开启联网</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">质量示例</div>
+                            <div class="text-gray-400 text-xs">给"好结果"的标准</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-3">
+                            <div class="text-orange-400 font-bold text-sm mb-1">记忆管理</div>
+                            <div class="text-gray-400 text-xs">项目化组织</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 3: Advanced -->
+            <div class="mb-8 fade-in stagger-4">
+                <div class="case-card border-l-4 border-purple-400 relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-3xl">
+                    </div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div
+                                class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                                <span class="text-2xl">✨</span>
+                            </div>
+                            <h3 class="text-2xl font-bold gradient-text">Level 3：真正的魔法</h3>
+                            <span class="pill bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs">高级</span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 bg-white/5 rounded-lg p-4">
+                                <div class="text-2xl">🎯</div>
+                                <div>
+                                    <div class="text-white font-bold mb-1">选对模型</div>
+                                    <div class="text-gray-400 text-sm">为任务挑工具</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 bg-white/5 rounded-lg p-4">
+                                <div class="text-2xl">⚡</div>
+                                <div>
+                                    <div class="text-white font-bold mb-1">深度 vs 速度</div>
+                                    <div class="text-gray-400 text-sm">要快还是要想清楚</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 bg-white/5 rounded-lg p-4">
+                                <div class="text-2xl">🧠</div>
+                                <div>
+                                    <div class="text-white font-bold mb-1">推理指令</div>
+                                    <div class="text-gray-400 text-sm">要求逐步思考</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 bg-white/5 rounded-lg p-4">
+                                <div class="text-2xl">🔗</div>
+                                <div>
+                                    <div class="text-white font-bold mb-1">思维链引导</div>
+                                    <div class="text-gray-400 text-sm">引导逻辑，而非只下命令</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 bg-white/5 rounded-lg p-4">
+                                <div class="text-2xl">🔄</div>
+                                <div>
+                                    <div class="text-white font-bold mb-1">迭代优化</div>
+                                    <div class="text-gray-400 text-sm">审阅 → 修改 → 提升</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 bg-white/5 rounded-lg p-4">
+                                <div class="text-2xl">📊</div>
+                                <div>
+                                    <div class="text-white font-bold mb-1">问题拆解</div>
+                                    <div class="text-gray-400 text-sm">抓住 20% 的关键，拿到 80% 的效果</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="mt-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl p-6 border border-purple-500/20">
+                            <div class="text-center">
+                                <div class="text-xl font-bold text-white mb-2">🎯 组合拳</div>
+                                <div class="text-gray-300 text-sm">
+                                    角色 + 背景 + 示例 + 迭代 = <span class="gradient-text font-bold">专家级输出</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -628,7 +918,8 @@
                         </div>
                         <a href="https://github.com/yalding8/salary-calculator" target="_blank" class="github-link">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                                <path
+                                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                             </svg>
                             View on GitHub
                         </a>
@@ -652,7 +943,7 @@
                         </button>
                     </div>
                     <div class="terminal-body font-mono text-sm">
-<pre><span class="comment">// 薪资计算核心逻辑</span>
+                        <pre><span class="comment">// 薪资计算核心逻辑</span>
 <span class="keyword">function</span> <span class="function">calculateSalary</span>(employee) {
     <span class="comment">// 基础薪资</span>
     <span class="keyword">const</span> baseSalary = employee.baseSalary;
@@ -701,12 +992,14 @@
             <div class="mb-16 fade-in stagger-2">
                 <div class="mb-6">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="inline-block bg-orange-500/10 text-orange-400 px-4 py-2 rounded-full text-sm font-mono">
+                        <div
+                            class="inline-block bg-orange-500/10 text-orange-400 px-4 py-2 rounded-full text-sm font-mono">
                             案例 02 · 房源信息爬虫
                         </div>
                         <a href="https://github.com/yalding8/market-scanner" target="_blank" class="github-link">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                                <path
+                                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                             </svg>
                             View on GitHub
                         </a>
@@ -729,7 +1022,8 @@
                         </div>
                         <a href="https://github.com/yalding8/ai-news-bot" target="_blank" class="github-link">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                                <path
+                                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                             </svg>
                             View on GitHub
                         </a>
@@ -747,12 +1041,14 @@
             <div class="mb-16 fade-in stagger-4">
                 <div class="mb-6">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="inline-block bg-orange-500/10 text-orange-400 px-4 py-2 rounded-full text-sm font-mono">
+                        <div
+                            class="inline-block bg-orange-500/10 text-orange-400 px-4 py-2 rounded-full text-sm font-mono">
                             案例 04 · AI 能力测试系统 ⭐ 公开
                         </div>
                         <a href="https://github.com/yalding8/aitest" target="_blank" class="github-link">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                                <path
+                                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                             </svg>
                             View on GitHub
                         </a>
@@ -763,7 +1059,8 @@
                         <br><br>
                         <strong class="text-white">解决方案：</strong>React + Node.js，100 题库 + 授权码系统 + 自动评分 + 微信通知，已上线使用。
                         <br><br>
-                        <strong class="text-cyan-400">🌐 在线体验：</strong><a href="https://test.pylosy.com" target="_blank" class="text-cyan-400 hover:text-orange-400 underline">test.pylosy.com</a>
+                        <strong class="text-cyan-400">🌐 在线体验：</strong><a href="https://test.pylosy.com" target="_blank"
+                            class="text-cyan-400 hover:text-orange-400 underline">test.pylosy.com</a>
                     </p>
                 </div>
 
@@ -1062,7 +1359,8 @@
                     <div class="text-4xl mb-3">💡</div>
                     <h3 class="text-2xl font-bold mb-2">记住这句话</h3>
                     <p class="text-gray-400 text-lg">
-                        <span class="text-cyan-400 font-bold">AI CODING 不是魔法</span>，而是<span class="text-orange-400 font-bold">放大器</span>
+                        <span class="text-cyan-400 font-bold">AI CODING 不是魔法</span>，而是<span
+                            class="text-orange-400 font-bold">放大器</span>
                         <br>
                         它放大你的生产力，也放大你的思维方式
                     </p>
@@ -1086,7 +1384,9 @@
                     <button class="btn-primary" onclick="window.open('https://test.pylosy.com', '_blank')">
                         体验 AI 测试系统
                     </button>
-                    <button class="bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold border border-white/10 transition-all" onclick="window.open('https://github.com/yalding8', '_blank')">
+                    <button
+                        class="bg-white/5 hover:bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold border border-white/10 transition-all"
+                        onclick="window.open('https://github.com/yalding8', '_blank')">
                         查看 GitHub
                     </button>
                 </div>
@@ -1174,4 +1474,5 @@
         });
     </script>
 </body>
+
 </html>
