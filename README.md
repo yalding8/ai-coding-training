@@ -67,6 +67,59 @@ chmod +x deploy-smart.sh
 - ✅ **自动检测并配置 SSL 证书**（certbot）
 - ✅ 智能选择 HTTP/HTTPS 访问地址
 
+### GitHub Actions 自动部署（推荐）
+
+项目已配置 GitHub Actions，每次推送到 `main` 分支时自动部署到生产服务器。
+
+#### 首次配置
+
+1. **在 GitHub 仓库设置 Secrets**
+
+进入仓库 `Settings` → `Secrets and variables` → `Actions`，添加以下 Secrets：
+
+```
+SERVER_HOST=188.166.250.114
+SERVER_USER=root
+SSH_PRIVATE_KEY=<你的私钥内容>
+```
+
+获取私钥内容：
+```bash
+cat ~/.ssh/id_ed25519
+# 复制全部内容（包括 BEGIN 和 END 行）
+```
+
+2. **触发部署**
+
+```bash
+# 方式 1: 推送代码自动触发
+git push origin main
+
+# 方式 2: GitHub 网页手动触发
+# 进入 Actions → Deploy to Production → Run workflow
+```
+
+#### 部署流程
+
+```mermaid
+graph LR
+    A[推送代码] --> B[GitHub Actions 触发]
+    B --> C[连接服务器]
+    C --> D[拉取最新代码]
+    D --> E[重载 Nginx]
+    E --> F[部署完成✅]
+```
+
+**优势**：
+- ✅ 零手动操作，推送即部署
+- ✅ 部署记录可追溯
+- ✅ 失败自动回滚（Git reset）
+- ✅ 支持手动触发部署
+
+**查看部署状态**：
+- GitHub 仓库 → `Actions` 标签
+- 每次部署都有详细日志
+
 ### 选项 2: 手动部署
 
 ```bash
@@ -194,12 +247,21 @@ open dashboard.html
 
 当你修改了代码后：
 
+### 方式 1: 自动部署（推荐）
+
 ```bash
 # 本地提交并推送
 git add .
 git commit -m "更新内容"
 git push origin main
 
+# GitHub Actions 会自动部署到服务器 🚀
+# 访问 https://github.com/yalding8/ai-coding-training/actions 查看部署状态
+```
+
+### 方式 2: 手动同步
+
+```bash
 # 服务器更新
 ssh root@YOUR_SERVER_IP "cd /var/www/ai-coding-training && git pull"
 ```
@@ -213,6 +275,9 @@ ssh root@YOUR_SERVER_IP "cd /var/www/ai-coding-training && git pull"
 
 ```
 ai-coding-training/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # GitHub Actions 自动部署配置
 ├── index.html              # 主培训页面
 ├── demo.html               # 数据看板生成器 Demo 教程
 ├── dashboard_generator.py  # Python 示例代码
@@ -220,6 +285,8 @@ ai-coding-training/
 ├── deploy.sh               # 基础部署脚本
 ├── deploy-smart.sh         # 智能部署脚本（推荐）
 ├── fix-502.sh              # 502 错误修复脚本
+├── CLOUDFLARE_FIX.md       # Cloudflare 故障排查指南
+├── DEVELOPMENT_RULES.md    # 开发规则与最佳实践
 ├── FIREWALL_SETUP.md       # 防火墙配置说明
 └── README.md               # 说明文档
 ```
