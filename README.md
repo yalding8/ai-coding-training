@@ -288,6 +288,28 @@ auth_basic "Restricted Access";
 auth_basic_user_file /etc/nginx/.htpasswd;
 ```
 
+## 🛠️ 开发与贡献
+
+### 开发规则
+
+在修改部署脚本或 Nginx 配置前，请务必阅读：
+👉 **[DEVELOPMENT_RULES.md](DEVELOPMENT_RULES.md)**
+
+该文档包含：
+- Nginx 配置标准
+- 部署脚本开发规范
+- Cloudflare 集成指南
+- 代码审查检查清单
+- 测试验证流程
+- 常见错误案例
+
+### 故障排查
+
+遇到部署或访问问题？请查看：
+- **重定向循环问题**: [CLOUDFLARE_FIX.md](CLOUDFLARE_FIX.md)
+- **开发规则**: [DEVELOPMENT_RULES.md](DEVELOPMENT_RULES.md)
+- **防火墙配置**: [FIREWALL_SETUP.md](FIREWALL_SETUP.md)
+
 ## 📞 联系方式
 
 - **GitHub**: [@yalding8](https://github.com/yalding8)
