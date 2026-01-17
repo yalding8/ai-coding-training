@@ -9,11 +9,16 @@
 - 4 大核心案例深度讲解
 - 交互式代码演示
 - 完整的避坑指南
+- ⚡ **新增**: VibeCoding Prompt 工程技巧（3个层级）
+- ⚡ **新增**: AI 工具推荐（6大场景，18+工具）
+- ⚡ **新增**: 数据看板生成器 Demo 教程
 - ⚡ **新增**: AnyGen AI 工作台推荐
 
 **技术栈**: 纯静态 HTML + Tailwind CSS + JavaScript
 
-**线上地址**: https://training.pylosy.com
+**线上地址**: 
+- 主培训页面：https://training.pylosy.com
+- Demo 教程：https://training.pylosy.com/demo.html
 
 ## 🚀 快速开始
 
@@ -51,7 +56,7 @@ chmod +x deploy-smart.sh
 1. **端口 8080** - 独立端口部署（推荐用于测试）
 2. **子路径 /training** - 与现有服务共存
 3. **覆盖端口 80** - 完全接管 80 端口（慎用）
-4. **域名部署** - 使用自定义域名（支持自定义端口，如 8888）
+4. **域名部署** - 使用自定义域名（支持自定义端口，自动检测并配置 SSL）
 
 ### 自动化功能
 
@@ -59,7 +64,8 @@ chmod +x deploy-smart.sh
 - ✅ 自动检测端口占用
 - ✅ 强制同步代码（解决 Git 冲突）
 - ✅ 支持自定义 Nginx 监听端口
-- ✅ 自动配置 SSL 证书（certbot）
+- ✅ **自动检测并配置 SSL 证书**（certbot）
+- ✅ 智能选择 HTTP/HTTPS 访问地址
 
 ### 选项 2: 手动部署
 
@@ -145,8 +151,44 @@ certbot --nginx -d training.yourdomain.com --non-interactive --agree-tos --regis
 
 **注意事项**：
 - 如果使用 Cloudflare CDN，建议将 SSL/TLS 模式设置为 **Full** 或 **Full (Strict)**
-- 如果遇到 `ERR_TOO_MANY_REDIRECTS` 错误，需要移除 Nginx 80 端口的强制 HTTPS 重定向
+- 部署脚本会自动检测 SSL 证书并配置 HTTPS
 - 推荐配置：同时监听 80 和 443，不强制跳转（兼容 Cloudflare Flexible 模式）
+
+## 🎯 使用 Demo 教程
+
+### 在线访问
+
+直接访问：https://training.pylosy.com/demo.html
+
+### 培训现场使用
+
+**方案 A：跟随在线教程**
+1. 投屏展示 `demo.html` 页面
+2. 员工按步骤操作（准备环境 → AI 辅助编码 → 运行脚本 → 查看成果）
+3. 使用提供的 AI Prompt 在 Cursor/Claude 中生成代码
+4. 30分钟内完成数据看板生成器
+
+**方案 B：下载资源包**
+```bash
+# 下载示例数据和代码模板
+wget https://training.pylosy.com/sales_data.csv
+wget https://training.pylosy.com/dashboard_generator.py
+
+# 安装依赖
+pip install pandas plotly
+
+# 运行示例
+python dashboard_generator.py
+
+# 查看生成的看板
+open dashboard.html
+```
+
+**教学要点**：
+- 强调 AI 辅助编程的价值（用 Prompt 生成代码）
+- 展示即时反馈（现场运行看到图表）
+- 鼓励员工用自己的数据尝试
+- 可扩展性：添加更多图表类型、数据源
 
 ## 📝 更新内容
 
@@ -171,23 +213,37 @@ ssh root@YOUR_SERVER_IP "cd /var/www/ai-coding-training && git pull"
 
 ```
 ai-coding-training/
-├── index.html          # 主页面（含 AnyGen 推荐）
-├── deploy.sh           # 基础部署脚本
-├── deploy-smart.sh     # 智能部署脚本（推荐）
-├── fix-502.sh          # 502 错误修复脚本
-├── FIREWALL_SETUP.md   # 防火墙配置说明
-└── README.md           # 说明文档
+├── index.html              # 主培训页面
+├── demo.html               # 数据看板生成器 Demo 教程
+├── dashboard_generator.py  # Python 示例代码
+├── sales_data.csv          # 示例数据文件
+├── deploy.sh               # 基础部署脚本
+├── deploy-smart.sh         # 智能部署脚本（推荐）
+├── fix-502.sh              # 502 错误修复脚本
+├── FIREWALL_SETUP.md       # 防火墙配置说明
+└── README.md               # 说明文档
 ```
 
 ## 🎨 特性
 
+### 主培训页面
 - ✨ 深色代码美学设计
 - 📱 完全响应式（支持移动端）
 - ⚡ 平滑滚动动画
 - 🔗 真实 GitHub 项目链接
 - 💻 可展开的代码块
 - 🎯 交互式导航
+- ⚡ **新增**: VibeCoding Prompt 工程技巧（3级进阶）
+- ⚡ **新增**: AI 工具推荐（6大场景分类）
 - ⚡ **新增**: AnyGen AI 工作台特别推荐
+
+### Demo 教程页面
+- 📖 30分钟交互式实操教程
+- 📋 分步指导（准备→编码→运行→查看）
+- 🤖 AI Prompt 模板（Cursor/Claude 辅助）
+- 📋 一键复制代码功能
+- 🔧 故障排查指南
+- 📊 完整 Python + Plotly 示例
 
 ## 📊 包含的项目案例
 
