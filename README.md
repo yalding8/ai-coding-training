@@ -11,6 +11,7 @@
 - 完整的避坑指南
 - ⚡ **新增**: VibeCoding Prompt 工程技巧（3个层级）
 - ⚡ **新增**: AI 工具推荐（6大场景，18+工具）
+- ⚡ **新增**: 新手工具箱（必备编辑器+效率工具+学习平台+博主推荐）
 - ⚡ **新增**: 数据看板生成器 Demo 教程
 - ⚡ **新增**: AnyGen AI 工作台推荐
 
@@ -302,6 +303,7 @@ ai-coding-training/
 - 🎯 交互式导航
 - ⚡ **新增**: VibeCoding Prompt 工程技巧（3级进阶）
 - ⚡ **新增**: AI 工具推荐（6大场景分类）
+- ⚡ **新增**: 新手工具箱（Obsidian/VSCode/Trae/Get笔记/GitHub/AI Studio/博主推荐）
 - ⚡ **新增**: AnyGen AI 工作台特别推荐
 
 ### Demo 教程页面
