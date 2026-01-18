@@ -11,9 +11,9 @@
 - 完整的避坑指南
 - ⚡ **新增**: VibeCoding Prompt 工程技巧（3个层级）
 - ⚡ **新增**: AI 工具推荐（6大场景，18+工具）
-- ⚡ **新增**: 新手工具箱（必备编辑器+效率工具+学习平台+博主推荐）
 - ⚡ **新增**: 数据看板生成器 Demo 教程
 - ⚡ **新增**: AnyGen AI 工作台推荐
+- ⚡ **新增**: Google Analytics 4 流量统计和实时追踪
 
 **技术栈**: 纯静态 HTML + Tailwind CSS + JavaScript
 
@@ -244,7 +244,47 @@ open dashboard.html
 - 鼓励员工用自己的数据尝试
 - 可扩展性：添加更多图表类型、数据源
 
-## 📝 更新内容
+## � Google Analytics 配置
+
+### 快速开始
+
+项目已集成 Google Analytics 4 (GA4) 流量统计，但需要配置你的衡量 ID。
+
+**1. 创建 GA4 账号**
+- 访问：https://analytics.google.com/
+- 创建媒体资源，获取衡量 ID（格式：`G-XXXXXXXXXX`）
+
+**2. 替换代码中的 ID**
+
+在 `index.html` 和 `demo.html` 中找到并替换：
+```html
+<!-- 替换两处 GA_MEASUREMENT_ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+    gtag('config', 'GA_MEASUREMENT_ID', {
+```
+
+替换为你的实际 ID：
+```html
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ABC1234XYZ"></script>
+<script>
+    gtag('config', 'G-ABC1234XYZ', {
+```
+
+**3. 查看实时数据**
+- Google Analytics → 报告 → 实时
+- 可以看到访问者数量、地理位置、访问页面等
+
+**详细配置指南**: 查看 [ANALYTICS_SETUP.md](ANALYTICS_SETUP.md)
+
+### 追踪的数据
+
+- ✅ 页面浏览量、用户数、sessions
+- ✅ 流量来源、地理位置、设备类型
+- ✅ 自定义事件：GitHub链接点击、导航使用、滚动深度
+- ✅ 页面加载时间、停留时长
+
+## �📝 更新内容
 
 当你修改了代码后：
 

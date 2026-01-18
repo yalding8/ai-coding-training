@@ -5,6 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI CODING 内部培训 | 异乡好居</title>
+
+    <!-- Google Analytics 4 -->
+    <!-- 替换 GA_MEASUREMENT_ID 为你的实际 ID (格式: G-XXXXXXXXXX) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID', {
+            'page_title': 'AI Coding Training',
+            'page_location': window.location.href,
+            'send_page_view': true
+        });
+
+        // 自定义事件追踪
+        function trackEvent(eventName, eventParams) {
+            gtag('event', eventName, eventParams);
+        }
+
+        // 页面滚动深度追踪
+        let scrollTracked = { 25: false, 50: false, 75: false, 100: false };
+        window.addEventListener('scroll', () => {
+            const scrollPercent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+
+            Object.keys(scrollTracked).forEach(threshold => {
+                if (scrollPercent >= threshold && !scrollTracked[threshold]) {
+                    trackEvent('scroll_depth', {
+                        'scroll_percentage': threshold
+                    });
+                    scrollTracked[threshold] = true;
+                }
+            });
+        });
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2151,6 +2186,66 @@
                     menuIcon.classList.remove('hidden');
                     closeIcon.classList.add('hidden');
                 }
+            });
+        }
+
+        // Analytics Event Tracking
+        if (typeof trackEvent === 'function') {
+            // Track GitHub link clicks
+            document.querySelectorAll('.github-link').forEach(link => {
+                link.addEventListener('click', function () {
+                    const projectName = this.href.split('/').pop() || 'unknown';
+                    trackEvent('github_link_click', {
+                        'project_name': projectName,
+                        'link_url': this.href
+                    });
+                });
+            });
+
+            // Track navigation clicks
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function () {
+                    const sectionName = this.getAttribute('href').replace('#', '');
+                    trackEvent('navigation_click', {
+                        'section': sectionName
+                    });
+                });
+            });
+
+            // Track demo button clicks
+            const demoButtons = document.querySelectorAll('a[href*="demo.html"]');
+            demoButtons.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    trackEvent('demo_page_click', {
+                        'button_text': this.textContent.trim()
+                    });
+                });
+            });
+
+            // Track code copy button clicks
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    trackEvent('code_copy', {
+                        'button_type': 'copy'
+                    });
+                });
+            });
+
+            // Track page load time
+            window.addEventListener('load', () => {
+                const loadTime = performance.now();
+                trackEvent('page_load', {
+                    'load_time_ms': Math.round(loadTime)
+                });
+            });
+
+            // Track time on page (when leaving)
+            let startTime = Date.now();
+            window.addEventListener('beforeunload', () => {
+                const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+                trackEvent('time_on_page', {
+                    'duration_seconds': timeOnPage
+                });
             });
         }
     </script>
