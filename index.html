@@ -449,27 +449,59 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-orange-500"></div>
-                <span class="font-mono text-lg font-bold">AI CODING</span>
+                <span class="font-mono text-base sm:text-lg font-bold">AI CODING</span>
             </div>
-            <div class="hidden md:flex items-center gap-8 text-sm font-mono">
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-mono">
                 <a href="#intro" class="hover:text-cyan-400 transition-colors">概念</a>
                 <a href="#why" class="hover:text-cyan-400 transition-colors">价值</a>
                 <a href="#prompt-tips" class="hover:text-cyan-400 transition-colors">技巧</a>
                 <a href="#tools" class="hover:text-cyan-400 transition-colors">工具</a>
-                <a href="#beginner-tools" class="hover:text-cyan-400 transition-colors">新手工具</a>
                 <a href="#cases" class="hover:text-cyan-400 transition-colors">案例</a>
                 <a href="#projects" class="hover:text-cyan-400 transition-colors">项目</a>
                 <a href="#pitfalls" class="hover:text-cyan-400 transition-colors">避坑</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
+                aria-label="Toggle menu">
+                <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-xl border-t border-white/10">
+            <div class="px-4 sm:px-6 py-4 space-y-1 max-w-7xl mx-auto">
+                <a href="#intro"
+                    class="mobile-nav-link block py-3 px-4 hover:bg-white/5 hover:text-cyan-400 rounded-lg transition-all">概念</a>
+                <a href="#why"
+                    class="mobile-nav-link block py-3 px-4 hover:bg-white/5 hover:text-cyan-400 rounded-lg transition-all">价值</a>
+                <a href="#prompt-tips"
+                    class="mobile-nav-link block py-3 px-4 hover:bg-white/5 hover:text-cyan-400 rounded-lg transition-all">技巧</a>
+                <a href="#tools"
+                    class="mobile-nav-link block py-3 px-4 hover:bg-white/5 hover:text-cyan-400 rounded-lg transition-all">工具</a>
+                <a href="#cases"
+                    class="mobile-nav-link block py-3 px-4 hover:bg-white/5 hover:text-cyan-400 rounded-lg transition-all">案例</a>
+                <a href="#projects"
+                    class="mobile-nav-link block py-3 px-4 hover:bg-white/5 hover:text-cyan-400 rounded-lg transition-all">项目</a>
+                <a href="#pitfalls"
+                    class="mobile-nav-link block py-3 px-4 hover:bg-white/5 hover:text-cyan-400 rounded-lg transition-all">避坑</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center grid-bg pt-20">
-        <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <div class="fade-in stagger-1">
                 <div class="pill bg-cyan-500/10 text-cyan-400 mb-8 inline-flex items-center gap-2">
                     <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
@@ -477,11 +509,11 @@
                 </div>
             </div>
 
-            <h1 class="text-7xl md:text-8xl font-black mb-6 fade-in stagger-2">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 fade-in stagger-2">
                 <span class="gradient-text">AI CODING</span>
             </h1>
 
-            <p class="text-2xl md:text-3xl text-gray-400 mb-12 fade-in stagger-3">
+            <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-400 mb-12 fade-in stagger-3">
                 非程序员的<span class="text-white font-bold">超能力解锁指南</span>
             </p>
 
@@ -525,12 +557,12 @@
     </section>
 
     <!-- Section 1: What is AI CODING -->
-    <section id="intro" class="py-32 px-6">
+    <section id="intro" class="py-16 sm:py-24 md:py-32 px-4 sm:px-6">
         <div class="max-w-5xl mx-auto">
             <div class="flex items-center gap-6 mb-12 fade-in">
                 <div class="number-circle">01</div>
                 <div>
-                    <h2 class="text-5xl font-black mb-2">什么是 AI CODING？</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2">什么是 AI CODING？</h2>
                     <p class="text-gray-400 font-mono text-sm">REDEFINE / PRODUCTIVITY</p>
                 </div>
             </div>
@@ -587,12 +619,12 @@
     <div class="section-divider"></div>
 
     <!-- Section 2: Why AI CODING -->
-    <section id="why" class="py-32 px-6">
+    <section id="why" class="py-16 sm:py-24 md:py-32 px-4 sm:px-6">
         <div class="max-w-5xl mx-auto">
             <div class="flex items-center gap-6 mb-12 fade-in">
                 <div class="number-circle">02</div>
                 <div>
-                    <h2 class="text-5xl font-black mb-2">为什么非程序员需要它？</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2">为什么非程序员需要它？</h2>
                     <p class="text-gray-400 font-mono text-sm">UNLOCK / YOUR POTENTIAL</p>
                 </div>
             </div>
@@ -705,12 +737,12 @@
     <div class="section-divider"></div>
 
     <!-- Section 2.5: Prompt Engineering Tips -->
-    <section id="prompt-tips" class="py-32 px-6">
+    <section id="prompt-tips" class="py-16 sm:py-24 md:py-32 px-4 sm:px-6">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center gap-6 mb-12 fade-in">
                 <div class="number-circle">02.5</div>
                 <div>
-                    <h2 class="text-5xl font-black mb-2">VibeCoding 新手小技巧</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2">VibeCoding 新手小技巧</h2>
                     <p class="text-gray-400 font-mono text-sm">MASTER / PROMPT ENGINEERING</p>
                 </div>
             </div>
@@ -906,7 +938,7 @@
             <div class="flex items-center gap-6 mb-12 fade-in">
                 <div class="number-circle">02.8</div>
                 <div>
-                    <h2 class="text-5xl font-black mb-2">AI 工具推荐</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2">AI 工具推荐</h2>
                     <p class="text-gray-400 font-mono text-sm">RECOMMENDED / AI TOOLS</p>
                 </div>
             </div>
@@ -1184,12 +1216,12 @@
     <div class="section-divider"></div>
 
     <!-- Section 2.9: Beginner Tools -->
-    <section id="beginner-tools" class="py-32 px-6">
+    <section id="beginner-tools" class="py-16 sm:py-24 md:py-32 px-4 sm:px-6">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center gap-6 mb-12 fade-in">
                 <div class="number-circle">02.9</div>
                 <div>
-                    <h2 class="text-5xl font-black mb-2">新手工具箱</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2">新手工具箱</h2>
                     <p class="text-gray-400 font-mono text-sm">BEGINNER / ESSENTIAL TOOLS</p>
                 </div>
             </div>
@@ -1507,12 +1539,12 @@
     <div class="section-divider"></div>
 
     <!-- Section 3: Real Cases -->
-    <section id="cases" class="py-32 px-6">
+    <section id="cases" class="py-16 sm:py-24 md:py-32 px-4 sm:px-6">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center gap-6 mb-12 fade-in">
                 <div class="number-circle">03</div>
                 <div>
-                    <h2 class="text-5xl font-black mb-2">实战案例展示</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2">实战案例展示</h2>
                     <p class="text-gray-400 font-mono text-sm">REAL / WORLD APPLICATIONS</p>
                 </div>
             </div>
@@ -1697,10 +1729,10 @@
     <div class="section-divider"></div>
 
     <!-- Section: All Projects -->
-    <section id="projects" class="py-32 px-6">
+    <section id="projects" class="py-16 sm:py-24 md:py-32 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-5xl font-black mb-4">完整项目库</h2>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-4">完整项目库</h2>
                 <p class="text-gray-400 font-mono text-sm">18 REAL PROJECTS / POWERED BY AI</p>
             </div>
 
@@ -1850,12 +1882,12 @@
     <div class="section-divider"></div>
 
     <!-- Section 4: Pitfalls -->
-    <section id="pitfalls" class="py-32 px-6">
+    <section id="pitfalls" class="py-16 sm:py-24 md:py-32 px-4 sm:px-6">
         <div class="max-w-5xl mx-auto">
             <div class="flex items-center gap-6 mb-12 fade-in">
                 <div class="number-circle">04</div>
                 <div>
-                    <h2 class="text-5xl font-black mb-2">避坑指南</h2>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-2">避坑指南</h2>
                     <p class="text-gray-400 font-mono text-sm">COMMON / MISTAKES</p>
                 </div>
             </div>
@@ -2080,6 +2112,47 @@
                 hero.style.opacity = 1 - (scrolled / 800);
             }
         });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    menuIcon.classList.add('hidden');
+                    closeIcon.classList.remove('hidden');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                }
+            });
+
+            // Close menu when clicking a link
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                }
+            });
+        }
     </script>
 </body>
 

@@ -78,11 +78,11 @@
     </style>
 </head>
 
-<body class="p-8">
+<body class="p-4 sm:p-6 md:p-8">
     <div class="max-w-5xl mx-auto">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-5xl font-black mb-4">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
                 <span class="gradient-text">数据看板生成器</span>
             </h1>
             <p class="text-2xl text-gray-400">30分钟实战教程 · 从零到成品</p>
@@ -95,7 +95,7 @@
 
         <!-- Overview -->
         <div class="step-card border-l-4 border-purple-500">
-            <h2 class="text-2xl font-bold mb-4">🎯 你将完成什么？</h2>
+            <h2 class="text-xl sm:text-2xl font-bold mb-4">🎯 你将完成什么？</h2>
             <p class="text-gray-300 mb-4">
                 创建一个 Python 脚本，读取业务数据（Excel/CSV），自动生成包含多种图表的交互式 HTML 看板。
             </p>
@@ -117,7 +117,7 @@
 
         <!-- Prerequisites -->
         <div class="step-card">
-            <h2 class="text-2xl font-bold mb-4">📋 准备工作（5分钟）</h2>
+            <h2 class="text-xl sm:text-2xl font-bold mb-4">📋 准备工作（5分钟）</h2>
 
             <h3 class="text-lg font-bold text-cyan-400 mb-2">1. 安装 Python（如果还没有）</h3>
             <p class="text-gray-400 mb-2">下载并安装 Python 3.8+：<a href="https://www.python.org/downloads/"
@@ -158,7 +158,7 @@
         <div class="step-card border-l-4 border-cyan-500">
             <div class="flex items-center gap-4 mb-4">
                 <div class="step-number">1</div>
-                <h2 class="text-2xl font-bold">创建 Python 脚本</h2>
+                <h2 class="text-xl sm:text-2xl font-bold">创建 Python 脚本</h2>
             </div>
             <p class="text-gray-300 mb-4">创建一个名为 <code
                     class="bg-white/10 px-2 py-1 rounded">dashboard_generator.py</code> 的文件</p>
@@ -283,7 +283,7 @@ print(f"🌐 请在浏览器中打开 {output_file} 查看结果")</pre>
         <div class="step-card border-l-4 border-orange-500">
             <div class="flex items-center gap-4 mb-4">
                 <div class="step-number">2</div>
-                <h2 class="text-2xl font-bold">运行脚本</h2>
+                <h2 class="text-xl sm:text-2xl font-bold">运行脚本</h2>
             </div>
             <p class="text-gray-300 mb-4">在终端/命令行中运行：</p>
             <div class="code-block font-mono text-sm">
@@ -301,7 +301,7 @@ print(f"🌐 请在浏览器中打开 {output_file} 查看结果")</pre>
         <div class="step-card border-l-4 border-purple-500">
             <div class="flex items-center gap-4 mb-4">
                 <div class="step-number">3</div>
-                <h2 class="text-2xl font-bold">查看成果</h2>
+                <h2 class="text-xl sm:text-2xl font-bold">查看成果</h2>
             </div>
             <p class="text-gray-300 mb-4">双击打开 <code class="bg-white/10 px-2 py-1 rounded">dashboard.html</code>，你将看到：
             </p>
@@ -327,7 +327,7 @@ print(f"🌐 请在浏览器中打开 {output_file} 查看结果")</pre>
 
         <!-- Advanced -->
         <div class="step-card bg-gradient-to-br from-purple-900/20 to-pink-900/20">
-            <h2 class="text-2xl font-bold mb-4">🚀 进阶优化（可选）</h2>
+            <h2 class="text-xl sm:text-2xl font-bold mb-4">🚀 进阶优化（可选）</h2>
             <div class="space-y-4">
                 <div>
                     <h3 class="text-lg font-bold text-purple-400 mb-2">1. 使用真实数据</h3>
@@ -351,7 +351,7 @@ print(f"🌐 请在浏览器中打开 {output_file} 查看结果")</pre>
 
         <!-- Troubleshooting -->
         <div class="step-card">
-            <h2 class="text-2xl font-bold mb-4">🔧 常见问题</h2>
+            <h2 class="text-xl sm:text-2xl font-bold mb-4">🔧 常见问题</h2>
             <div class="space-y-3">
                 <div class="bg-white/5 p-3 rounded">
                     <div class="text-orange-400 font-bold mb-1">Q: ModuleNotFoundError: No module named 'pandas'</div>
